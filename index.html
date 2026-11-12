@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoriOffice | Creador e Impresión de Documentos</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-light: #3b82f6;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Encabezado Hero */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, var(--primary) 100%);
+      color: white;
+      text-align: center;
+      padding: 60px 20px 50px;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 15px;
+      backdrop-filter: blur(4px);
+    }
+
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      margin: 0 auto 28px;
+      max-width: 620px;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+
+    .hero-btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 1rem;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .hero-btn:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Navegación */
+    nav {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    nav a:hover {
+      background-color: #eff6ff;
+      color: var(--primary);
+    }
+
+    /* Contenedor Principal */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    section {
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    /* Tarjetas Generales */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Grid de Funcionalidades */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .feature-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Pasos para Imprimir */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .step-box {
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .step-number {
+      background: var(--primary);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    /* Caja de Correo y Contacto */
+    .email-box {
+      background: linear-gradient(to right, #f0fdf4, #eff6ff);
+      border: 2px dashed var(--primary-light);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .email-display {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 12px;
+      margin: 16px 0 24px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      padding: 13px 24px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background-color: white;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f1f5f9;
+    }
+
+    .specs-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .specs-list div strong {
+      display: block;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .specs-list div span {
+      color: var(--text-muted);
+    }
+
+    /* Descarga */
+    .download-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 35px 20px;
+      font-size: 0.9rem;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.9rem;
+      }
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge">📄 Creación Digital & Centro de Impresión</span>
+    <h1>BoriOffice</h1>
+    <p>Crea resúmenes y currículums profesionales de forma rápida o envíanos tus documentos por correo electrónico para imprimirlos en nuestra oficina.</p>
+    <a href="#contact" class="hero-btn">Enviar Documentos para Imprimir</a>
+  </header>
+
+  <nav>
+    <a href="#about">Sobre BoriOffice</a>
+    <a href="#features">Funcionalidades</a>
+    <a href="#contact">Enviar a Imprimir</a>
+    <a href="#download">Descarga</a>
+  </nav>
+
+  <main>
+    <!-- Sección Sobre -->
+    <section id="about">
+      <h2>¿Qué es BoriOffice?</h2>
+      <p class="section-subtitle">Tu solución integral para diseñar documentos impecables y obtener impresiones de alta calidad sin complicaciones.</p>
+      <div class="card">
+        <p style="margin-top: 0;">
+          <strong>BoriOffice</strong> es una herramienta gratuita diseñada para ayudarte a crear y organizar currículums (resúmenes), cartas y documentos profesionales con un formato atractivo y fácil de leer, integrando textos, imágenes y tablas.
+        </p>
+        <p style="margin-bottom: 0;">
+          Además, si no cuentas con impresora en casa, ponemos a tu disposición nuestro <strong>servicio de recepción por correo electrónico</strong>: nos envías tu archivo desde tu teléfono o computadora y lo tendrás impreso y listo para recoger en nuestra oficina.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sección Funcionalidades -->
+    <section id="features">
+      <h2>Funcionalidades Principales</h2>
+      <p class="section-subtitle">Todo lo que necesitas para preparar y entregar tus documentos con presentación profesional.</p>
+      <div class="grid">
+        <div class="feature-card">
+          <span class="feature-icon">📝</span>
+          <h3>Formatos PDF y Word</h3>
+          <p>Crea, edita y exporta tus resúmenes y documentos en formatos universales listos para compartir.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🖨️</span>
+          <h3>Impresión Directa</h3>
+          <p>Imprime directamente desde tu dispositivo o envía tus archivos a nuestro centro de impresión.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🎨</span>
+          <h3>Diseño Personalizable</h3>
+          <p>Ajusta márgenes, tipografías, tablas e imágenes para que tu documento destaque visualmente.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📂</span>
+          <h3>Importar y Exportar</h3>
+          <p>Abre archivos existentes fácilmente, haz tus cambios y guárdalos sin perder calidad.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Contacto / Envío de Documentos para Imprimir -->
+    <section id="contact">
+      <h2>Envía tus Documentos para Imprimir</h2>
+      <p class="section-subtitle">¿Necesitas imprimir un resumen, tarea, etiqueta o documento importante? Envíalo a nuestro correo oficial.</p>
+
+      <div class="steps">
+        <div class="step-box">
+          <div class="step-number">1</div>
+          <h4 style="margin: 5px 0;">Adjunta tu archivo</h4>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">Envíanos tu documento en PDF, Word o imagen al correo de la oficina.</p>
+        </div>
+        <div class="step-box">
+          <div class="step-number">2</div>
+          <h4 style="margin: 5px 0;">Indica los detalles</h4>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">Especifica cantidad de copias, blanco y negro o a color, y tu nombre.</p>
+        </div>
+        <div class="step-box">
+          <div class="step-number">3</div>
+          <h4 style="margin: 5px 0;">Recoge en oficina</h4>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">Preparamos tu impresión rápidamente para que solo pases a retirarla.</p>
+        </div>
+      </div>
+
+      <div class="email-box">
+        <h3 style="margin-top: 0; color: var(--text-main);">Correo Oficial de Impresiones</h3>
+        <p style="margin: 0; color: var(--text-muted);">Haz clic en el botón para abrir tu correo con el asunto listo, o copia nuestra dirección:</p>
+
+        <!-- CAMBIA AQUÍ TU CORREO REAL -->
+        <div class="email-display" id="office-email">
+          📧 boricoininc@gmail.com
+        </div>
+
+        <div class="btn-group">
+          <!-- CAMBIA AQUÍ TAMBIÉN TU CORREO REAL DESPUÉS DE mailto: -->
+          <a href="mailto:boricoininc@gmail.com?subject=Solicitud%20de%20Impresi%C3%B3n%20-%20BoriOffice&body=Hola%20equipo%20de%20BoriOffice%2C%0A%0AAdjunto%20mi%20documento%20para%20imprimir.%0A%0A-%20Nombre%3A%20%0A-%20Cantidad%20de%20copias%3A%201%0A-%20Tipo%20de%20impresi%C3%B3n%20(Blanco%20y%20Negro%20%2F%20Color)%3A%20%0A-%20Tama%C3%B1o%20de%20papel%20(Carta%20%2F%20Oficio)%3A%20Carta%0A%0A%C2%A1Gracias!" class="btn btn-primary">
+            ✉️ Enviar Documento por Email
+          </a>
+
+          <button type="button" class="btn btn-secondary" onclick="copiarCorreo()">
+            📋 <span id="copy-text">Copiar Dirección de Correo</span>
+          </button>
+        </div>
+
+        <div class="specs-list">
+          <div>
+            <strong>📎 Formatos Aceptados</strong>
+            <span>PDF (recomendado), DOCX, DOC, JPG, PNG</span>
+          </div>
+          <div>
+            <strong>🖨️ Opciones de Papel</strong>
+            <span>Carta (8.5" x 11"), Oficio / Legal, Papel foto</span>
+          </div>
+          <div>
+            <strong>🕒 Horario de Atención</strong>
+            <span>Lun - Sáb: 2:00 PM – 7:00 PM</span>
+          </div>
+          <div>
+            <strong>📍 Ubicación de Recogida</strong>
+            <span>Dirección de oficina es en 8612 W IBM Hwy, 202, Kissimmee Florida 34747</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Descarga -->
+    <section id="download">
+      <div class="card download-banner">
+        <div>
+          <h2 style="text-align: left; margin-top: 0;">Descarga BoriOffice</h2>
+          <p style="margin: 0; color: var(--text-muted);">Obtén la aplicación gratuita y comienza a crear tus resúmenes hoy mismo.</p>
+        </div>
+        <!-- CAMBIA EL ENLACE # POR EL LINK REAL DE DESCARGA -->
+        <a href="BoriOffice.apk" class="btn btn-primary">⬇️ Descargar Ahora</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p style="margin: 0 0 6px;"><strong>BoriOffice</strong> &copy; <span id="year"></span>. Todos los derechos reservados.</p>
+    <p style="margin: 0; font-size: 0.82rem;">Creación de documentos e impresiones rápidas en oficina.</p>
+  </footer>
+
+  <script>
+    // Actualiza el año automáticamente
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Función para copiar el correo al portapapeles
+    function copiarCorreo() {
+      const correo = "boricoininc@gmail.com"; // <-- Cambia aquí también tu correo real
+      navigator.clipboard.writeText(correo).then(() => {
+        const btnText = document.getElementById('copy-text');
+        btnText.textContent = "¡Correo copiado!";
+        setTimeout(() => {
+          btnText.textContent = "Copiar Dirección de Correo";
+        }, 2500);
+      });
+    }
+  </script>
+
+</body>
+</html>
